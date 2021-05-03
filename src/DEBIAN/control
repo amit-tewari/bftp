@@ -1,0 +1,9 @@
+Package: bftp
+Version: 0.0.1
+Section: non-free/doc
+Priority: optional
+Architecture: all
+Depends: mdp, tmux
+Maintainer: tewari.a@gmail.com
+Description: Back To The Future
+ Learn Linux in good old ways

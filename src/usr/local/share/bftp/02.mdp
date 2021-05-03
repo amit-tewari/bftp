@@ -1,0 +1,39 @@
+-> ## Files and Processes
+-> ## ...................
+
+-> Computing is all about processing data
+^
+
+-> Two core concepts
+^
+
+-> * Files *
+^
+-> and
+-> * Processes *
+
+---
+
+-> ## Processes
+-> ## .........
+
+-> (almost) Anything, not a file, is a process.
+
+^
+- shell is the process we interact with.
+^
+- running editors, web-browsers are also processes.
+^
+- processes are like living entities. processes
+  - create child
+  - die
+  - communicate
+  - even sleep 😉
+^
+- Unlike living enities
+  - processes change their code after start
+
+---
+
+-> ## Input, Output and Error
+-> ## .......................

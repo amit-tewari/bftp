@@ -1,0 +1,270 @@
+-> ## Files and Processes
+-> ## ...................
+
+-> Computing is all about processing data
+^
+
+-> Two core concepts
+^
+
+-> * Files *
+^
+-> and
+-> * Processes *
+
+---
+
+-> ## Files
+-> ## .....
+
+-> In Linux and UNIX like systems
+
+-> * File = Metadata + Data *
+^
+
+-> *Metadata* = Information about the file
+-> *Data* = Contents of the file
+^
+
+-> for each file
+-> .............
+-> Metadata is stored in * i-node *
+-> Data is stored in * data blocks *
+^
+
+-> Files are stored in filesystm on *Storage medida*
+
+---
+
+-> ## Filesystem <-
+-> ## ..........
+
+- Stores multiple files
+^
+- Created on *partition* or *disk*
+^
+- Can be imagined as follows:
+
+-> iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+-> iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+-> iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+-> dddddddddddddddddddddddddddddddd
+
+each *i* represnts an i-node
+each *d* represnts a data block
+
+---
+
+-> ## Disk and Partition schemes and Partitions
+-> ## .........................................
+
+^
+-> *Disk* = *Partition table* + *Partitions*
+
+^
+
+-> Disk partitioning
+-> .................
+-> Create *partition(s)* on disk following a *partitioning scheme*
+^
+-> partitioning scheme types: *MSDOS*, *GPT* etc.
+^
+
+```
+Disk
+-------------------------------------------------------
+|PT|     P1        |    P2         |   P3             |
+-------------------------------------------------------
+PT = Partition Table
+P1, P2, P3...= Partitions
+```
+^
+ 
+-> Formating
+-> .........
+-> Create a *filesystem* on volume.
+^
+
+-> *Volume* = *Formatted* disk or partition
+
+
+---
+
+-> ## Disk management tools/ commands
+-> ## ...............................
+
+
+- *lsblk*      : list disks or block devices
+^
+- *blkid*      : list volumes/ partitions
+^
+- *fdisk*      : partition disk
+^
+- *mkfs.ext4*  : create EXT4 filesystem
+^
+- *mkfs.fat32* : create FAT32/ DOS filesystem
+
+---
+
+-> ## Demo
+-> ## ....
+^
+- Create partition table and partitions
+- Create filesystem/ format partitions
+- Format full disk
+- Note the output of mkfs.ext4
+
+*WARNING: These operations cause permanent data loss*
+
+---
+
+-> ## Filesystem Physical layout
+-> ## ..........................
+
+-> Simplified layout
+
+SB                                 Superblock
+................................   i-node bitmap 
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii ▲
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii | i-node area
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii ▼
+................................   data block 
+................................   bitmap 
+dddddddddddddddddddddddddddddddd ▲
+dddddddddddddddddddddddddddddddd | data block
+dddddddddddddddddddddddddddddddd | area
+dddddddddddddddddddddddddddddddd |
+dddddddddddddddddddddddddddddddd |
+dddddddddddddddddddddddddddddddd ▼
+
+^
+- *Superblock*        : Information about the filesystem
+^
+- *i-node bitmap*     : free/ used i-nodes
+- *i-node area*       : i-node are stored
+^
+- *data block bitmap* : free/ used data blocks
+- *data block area*   : data blocks are stored
+
+---
+
+-> ## Filesystem Logical layout
+-> ## .........................
+
+-> DIRENT
+-> ......
+^
+-> dirent = *File Name* + i-node number + *type*
+^
+
+-> Stored in *directory files*
+^
+-> Special directory file */*
+^
+
+-> Two special dirents
+-> *.* : current directory
+-> *..* : parent directory  <-
+
+---
+
+-> ## Demo
+-> ## ....
+
+- list */*, */.*, */..*, */home*, */home/.* and */home/..*  directories
+
+```
+$ ls -1di / /. /.. /home /home/. /home/..
+       2 /
+       2 /.
+       2 /..
+15204353 /home
+15204353 /home/.
+       2 /home/..
+```
+
+- Try finding information on your own system.
+- How *ls -1di /home* and *ls -1di /home/.* behave?
+
+---
+
+-> ## Type of files
+-> ## .............
+
+- Regular file   : files containing user created data on disk
+- Directory file : file containing dirents
+- links          : symbolic links
+- FIFO           : special in memory files
+- socket         : network connections
+- block device   : hardware devices operating in block mode
+- character dev. : hardware devices operating in character mode
+
+---
+
+-> ## i-node contents
+-> ## ...............
+
+^
+- file type
+- blocks used (512 byte sized)
+- link count
+
+^
+- access permissions (user, group, other, sticky, suid, sgid)
+- user owner id
+- group owner id
+
+^
+- access time stamp
+- modify time stamp
+- change time stamp
+
+^
+*in-accessible*
+- direct data block address
+- single indirect data block address
+- double indirect data block address
+- tripple indirect data bock address
+
+---
+
+-> ## Demo
+-> ## ....
+
+- Run *stat* command on */* directory.
+- Run stat command on some entries in */dev/* directory.
+
+^
+-> Excercise
+-> .........
+
+- Create a directory *my_test* in *~* directory
+  (use *mkdir* command. ~ is user's *home directory*)
+- *touch* a file "sample" in *~/my_test/*
+- use *stat* and *ls* commands on *~/my_test/sample*
+- use *man* command to find help about mkdir, stat and touch.
+- use man command to find help about man command.
+
+---
+
+File ownership and Permissions
+
+---
+
+Soft and hard links
+
+---
+
+Storage in data blocks
+
+---
