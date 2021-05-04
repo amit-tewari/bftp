@@ -25,6 +25,7 @@
 - running editors, web-browsers are also processes.
 ^
 - processes are like living entities. processes
+  - have identity
   - create child
   - die
   - communicate
@@ -33,7 +34,103 @@
 - Unlike living enities
   - processes change their code after start
 
+^
+-> Just like root i-node, we have special process with ID 1.
+
+---
+
+-> ## init and systemd
+-> ## ................
+
+init
+....
+- is *initial* process
+- is started during boot
+- creates other main processes in process tree
+- usually has process ID 1
+
+^
+-> systemd is modern init system
+-> .............................
+
+-> try *pstree -p* on console
+
 ---
 
 -> ## Input, Output and Error
 -> ## .......................
+
+Processes
+- read input
+- write output
+
+^
+- have 3 standard *streams*, available by default
+  - *STDIN* : read _buffered_ input from
+  - *STDOUT* : write buffered output to
+  - *STDERR* : write _un-buffered_ errors to
+
+^
+Buffering
+- collect data from multiple operations before performing I/O
+- improves throughput and I/O efficiency
+- reduces interactivity
+
+---
+
+-> ## Process table and File descriptor tables
+-> ## ........................................
+
+Process Table
+- array of *Process ID (PID)* and *Process Control Block (PCB)* tuples
+
+Process Control Block consists of
+- Process ID
+- Parent process ID
+- Process Group ID
+- Instruction pointer
+- Memory maps
+- Open file descriptors -> File descriptor table (FDT)
+- Priority and scheduling information
+- Resource counters
+- Much more information
+
+File Descriptor table
+- Per process
+- file open mode
+- read and/ or write pointers
+- pointer into *Global file descriptor table*
+
+---
+
+-> ## Global file descriptor table (GFDT)
+-> ## ...................................
+
+GFDT contains
+- in-core inode for each opened file
+- reference count for each file from PCB file descriptor table
+
+FDT1                    | GFDT
+....                    | 1: fileX (2)
+FD3:R=100,W=100:GFDT(1) | 2: fileY (1)
+FD4:R=50,W=50:GFDT(2)   | 3: fileZ (1)
+                        |
+FDT2                    |
+....                    |
+FD3:R=100,W=100:GFDT(3) |
+FD4:R=50,W=50:GFDT(1)   |
+
+---
+
+-> ## Process creation: fork()/ exec()
+-> ## ................................
+
+---
+
+-> ## Process States
+-> ## ..............
+
+---
+
+-> ## Signals
+-> ## .......
