@@ -1,0 +1,130 @@
+-> ## Inter process communication
+-> ## ...........................
+
+System V IPC
+- *Message queues*
+  Place message on queue to be read by other processes
+  _lib calls:_ msgget, msgsend, msgrcv, msgctl
+- *Semaphore sets*
+  Synchronize actions across processes
+  _lib calls:_ semget, semop, semctl
+- *Shared memory segments*
+  Share regions of memory across processes
+  _lib calls:_ shmget, shmat, shmdt, shmctl
+- *commands:* ipcmk  ipcrm  ipcs
+
+^
+- *Signals*
+  _command:_ kill(1), _lib call:_ kill(2)
+- *FIFO/ named pipes*
+- *Sockets*
+  Single system: UNIX domain sockets
+  Multiple systems: TCP sockets, UDP sockets, other
+^
+- *Files?*
+
+---
+
+-> ## Message queues
+-> ## ..............
+
+Common usage pattern
+- create a queue
+- share queue identifier across processes
+- write messages to the the queues from one process
+- read messages from queue in same or another process
+^
+- ipcmk can be used to create a message queue from shell
+^
+- *man (7) mq_overview* for detailed operations
+
+---
+
+-> ## Semaphore sets
+-> ## ..............
+
+Common usage pattern
+- create a new semaphore set
+- decrement value by one, wait if value goes negative
+- begin work, finish work
+- increment semaphore
+^
+- ipcmk can be used to create a message queue from shell
+^
+- *man (7) sem_overview* for detailed operations
+
+---
+-> ## Shared memory segments
+-> ## ......................
+
+
+Common usage pattern
+- create a shared memory segment
+- attach to new/ existing segment
+- write to/ read from the segment
+- (optionaly) syncronize with other processes using semaphores
+^
+- ipcmk can be used to create a message queue from shell
+^
+- *man (7) shm_overview* for detailed operations
+
+---
+-> ## Signals
+-> ## .......
+
+- asynchronous notifications among processes
+^
+- handled with-in process by signal handlers
+^
+- some interrupts are passed as signals to processes
+^
+- signals have default actions, which can be over-ridden
+^
+- some signals can be masked
+^
+- normally sent by kernel to processes
+^
+- user defined conditions are also supported
+^
+- programming languages provide features for signal handling
+^
+- kill(1) and kill(2) are used to send signals
+
+---
+-> ## FIFO/ named pipes
+-> ## .................
+
+- these are special files without data blocks
+- provides bi-directional half-duplex data transfer
+- unrelated processes can use FIFO for communication
+- communication processes should be on same host
+- FIFO file names persist across host restarts
+- FIFO data does not persist across host restarts
+
+---
+-> ## Sockets: UNIX domain socket
+-> ## ...........................
+
+- enables communication on same host
+- enables bi-directional full-duplex communication
+- provides kernel verified user/ group authentication
+- allows passing file-descriptors across processes
+- supports packet oriented and stream oriented communication
+
+---
+-> ## Sockets: TCP sockets
+-> ## ....................
+
+- enables across host, stream oriented communication
+- communication is full duplex and reliable
+- no imbedded authentication support
+- no file-descriptor passing is allowed
+
+---
+-> ## Sockets: UDP sockets
+-> ## ....................
+
+- enables across host, packet oriented communication
+- communication is full duplex, but un-reliable
+- no imbedded authentication support
+- no file-descriptor passing is allowed

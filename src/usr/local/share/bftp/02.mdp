@@ -125,12 +125,79 @@ FD4:R=50,W=50:GFDT(1)   |
 -> ## Process creation: fork()/ exec()
 -> ## ................................
 
+- Processes create children using *fork* library call
+- A process changes program text using *exec* library call
+^
+- Certain customizations happen between fork and exec
+  - open/ close/ duplicate file FDs
+  - open/ close/ duplicate pipes FDs
+  - tweak environment variables, etc.
+
 ---
 
+-> ## fork & exec example
+-> ## ...................
+
+-> Simplified explanation for *ls | sort*
+
+- shell creates a *pipe (|)*
+- shell forks two process
+- Both processes now share the pipe
+^
+- First process
+  - closes STDOUT file descriptor
+  - duplicates pipe's write file descriptor to STDOUT
+  - exec code from *ls* binary
+^
+- Second process
+  - closes STDIN file descriptor
+  - duplicates pipe's read file descriptor to STDIN
+  - exec code from *sort* binary
+
+---
 -> ## Process States
 -> ## ..............
 
----
+- *D* = uninterruptible sleep
+- *I* = idle
+- *R* = running
+- *S* = sleeping
+- *T* = stopped by job control signal
+- *t* = stopped by debugger during trace
+- *Z* = zombie
 
--> ## Signals
--> ## .......
+^
+-> Commands
+-> ........
+
+-> ps
+-> top
+
+---
+-> ## I/O Redirction and Pipelining
+-> ## .............................
+
+by default
+- STDIN connects to keybord input
+- STDOUT and STDERR connect to display
+
+^
+Redirection
+- allows STD{IN,OUT,ERR} streams to connect to files
+-  *<* = STDIN redirection
+-  *>* = STDOUT redirection, with *truncate*
+- *>>* = STDOUT redirection, with *append*
+- *2>* = STDERR redirection
+^
+- e.g.
+  - *$ cat < infile > outfile 2> errorfile*
+  - *$ cat < infile >> outfile*
+
+^
+Pipeline
+- connects STDOUT of one process into STDIN of another
+^
+- processes need to have a common ancestor
+^
+- e.g.
+  - *$ cat | sort*

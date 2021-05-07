@@ -1,0 +1,103 @@
+-> ## Memory
+-> ## ......
+
+-> Physical RAM (Random Access Memory)
+-> Swap
+
+^
+Kernel space
+- Kernel processes
+- Buffers and cache
+  - dirent cache
+  - i-node cache
+  - block cache
+  - i/o buffers
+- and some more usage
+
+^
+User space
+- code or text
+- heap
+- stack
+
+^
+-> Process address space
+-> .....................
+Virtual address space that gets mapped to Physical addresses
+
+---
+
+-> ## Opening files for read/ write
+-> ## .............................
+
+- user process requests file open
+- kernel
+  - converts file name to i-node with directory lookups
+^
+  - loads i-node in memory
+^
+  - checks permissions for requested operation
+^
+  - creates/ updates FDT and GFDT entries
+^
+  - loads reqested data blocks in RAM
+^
+  - periodically syncs modified i-node and data blocks
+
+^
+  - caches dirent, i-node and data blocks in RAM
+  - caching is based on usage frequency
+
+-> Commands
+-> ........
+-> free, top, ps
+
+---
+
+-> ## Memory allocations
+-> ## ..................
+
+heap space
+- explicit with malloc(), new() etc. in C, C++
+- implicit with new object creations in Perl, Python etc.
+- grows upwards to higher address ranges
+^
+
+stack space
+- implicit with function calls
+- grows downwards to lower address ranges
+
+^
+Kernel
+- allocates addresses ranges
+- allocates actual memory
+- keeps track of allocations
+
+---
+
+-> ## Memory allocations
+-> ## ..................
+
+Simplified view
+
+1 malloc(1000)
+2 malloc(2000)
+3 malloc(2000)
+4 function1()
+5 function2()
+
+^
+......|.......|  misc addresses
+ 9000 | ccccc |  program code
+10000 | ccccc |
+..... | ..... |
+11000 | hhhhh |  malloc(1000)
+12000 | hhhhh |  malloc(2000)
+13000 | hhhhh |
+14000 | hhhhh |  malloc(2000)
+15000 | hhhhh |
+16000 | ..... |
+..... | fffff |  available virtual address range
+..... | ..... |
+98000 | sssss |  function2
+99000 | sssss |  function1
