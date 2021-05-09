@@ -1,0 +1,89 @@
+-> ## Networking
+-> ## ..........
+
+- Network Addresses
+  - Ethernet, IP, DNS
+^
+
+- Ports
+  - 53/DNS, 80/HTTP
+^
+
+- Protocols
+  - TCP, UDP, IP, Ehernet, DNS, HTTP
+^
+
+- Implementtaions
+  - TCP      : Linux kernel TCP code
+  - IP       : Linux kernel IP code
+  - Ethernet : Linux kernel Ethernet code
+  - DNS      : Bind, Unbound
+  - HTTP     : Apache, NGINX
+
+---
+
+-> ## Addresses
+-> ## .........
+
+Ethernet
+- used among systems on same local network
+- computer, hub/ switch and routers communication
+- 48bit address
+- helps higher level network addresses, e.g. IP
+- ARP (Address Resolution Protocol) maps to IP addresses
+- implemented in Kernel code
+- e.g. 02:42:8f:f9:04:0d
+
+^
+IP (Internet Protocol) address
+- Used to connect networks (network of networks/ Internet)
+- works globally as well as on local networks
+- addresses have various classes and network sizes
+- helps map domain names to systems
+- implemented in Kernel code
+- e.g. 192.168.0.1, 8.8.8.8
+
+^
+DNS addresses
+- human friendly names to systems on Internet
+- Hierarchical naming scheme
+- implemented in an *application server*
+- e.g. www.debian.org
+
+---
+-> ## Ports
+-> ## .....
+
+- used by applications to talk with each other
+- reliable/ non-reliable
+- packet oriented/ stream oriented
+- port 80 is conventionaly used by web servers
+
+Application           : Application layer
+TCP         [Port]    : Transport layer
+IP          [Address] : Network Layer
+Ethernet    [Address] : Physical layer
+
+---
+-> ## Protocols
+
+- set of rules and data formats
+- specified in RFCs
+- implemented by operating systems and applications
+
+^
+Examples:
+- DNS : glue protocol for many network protocols
+- Connectivity: Telnet and SSH
+- File transfer: FTP, FTPs, SFTP
+- Web: HTTP and HTTPS
+- Email: IMAP/ POP
+- Email: SMTP and SMTPS
+
+---
+-> ## Switching vs Routing
+
+At network layer 
+- packet transfer within network
+- packet transfers across networks
+

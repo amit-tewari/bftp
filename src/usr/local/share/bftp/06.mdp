@@ -1,0 +1,218 @@
+-> ## Bash
+-> ## ....
+
+-> https://tldp.org/LDP/Bash-Beginners-Guide/html/
+
+Command interpreter
+- *interprets* user command into computer code
+- provides invironemnt to the user (ENV VARS)
+- provides
+  - *built-ins* (commands which are part of the shell)
+  - user/ programming environment
+  - intercative and non-interactive execution
+  - I/O redirection and pipelining
+  - process management
+- helps running *external commands* (not part of shell)
+^
+- availale shells listed in */etc/shells*
+- assigned to users in */etc/passwd*
+
+---
+
+-> ## Command
+-> ## .......
+
+-> *command* + *options* + *arguments*
+
+```
+$ ls -l /etc
+```
+
+- *$*    : command prompt
+- *ls*   : *alias*, command or built-in
+- *-l*   : option (short option)
+- */etc* : argument
+
+how do we find if a command is built-in or external command?
+^
+
+```
+$ type ls
+ls is aliased to `ls --color=auto`
+$ type /bin/ls
+/bin/ls is /bin/ls
+$ type echo
+echo is a shell builtin
+```
+
+---
+
+-> ## Startup
+-> ## .......
+
+Startup files
+^
+- *Interactive login* shell (--login)
+  - /etc/profile
+  - first readble file among 
+    - ~/.bash_profile
+    - ~/.bash_login
+    - ~/.profile
+  - ~/.bash_logout (on logout)
+^
+- *Interactive non-login* shell
+  - ~/.bashrc (usually sourced from ~/.bash_profile)
+^
+- *Non interactive* shell
+  - scripts
+  - cron/ at jobs
+^
+- *POSIX compatible* mode
+  - /etc/profile
+  - ~/.profile
+^
+- *No initialization files read when UID != EUID*
+
+---
+
+-> ## Command execution
+-> ## .................
+
+Builtins
+- Bourne shell builtins
+- Bash builtins
+- POSIX builtins
+^
+
+External commands
+- Stored in filesystem in executable *path*
+  - *$PATH* has list of paths
+^
+
+Alias
+- Shorthand to a command or expression
+  - ls example in previous slides
+
+---
+ 
+-> ## Command execution
+-> ## .................
+
+fork + exec
+- *fork* : create a new process
+^
+- *exec* : change the process code
+^
+- *clone* and few other calls for similar effect
+
+*Subshell/ Subprocess*
+- each interactive command is started in new subshell
+^
+- script creates a subshell and each command creates further child
+
+---
+
+-> ## Script execution
+-> ## ................
+
+- *Read*
+- *Tokenize*
+- *Parse*
+- *Expand*
+- *Redirections*
+- *Execute*
+- *Reap*
+^
+
+-> *RT-PER-ER*
+
+---
+
+-> ## Script : Terminology
+-> ## ....................
+
+
+- *variable*                  declare NAME
+^
+- *assignments*               NAME="My Name"
+^
+- *echo*                      echo $NAME
+^
+- *input*                     read NAME
+^
+- *if..fi*                    if [ C1 ]; then A1; fi
+  C1 = conditional 1
+  A1 = action/ action set 1
+^
+- *if..elif..else..fi*        
+  if [ C1 ]; then A1; elif [ C2 ]; then A2; else A3; fi 
+^
+- *for/ while/ until*
+  for FILE in $(ls -1); do echo ${FILE}; done
+^
+  - *break, continue*
+^
+- *functions*
+  function f() { echo $NAME }; f
+^
+- *array/ associative arrays*
+^
+- *exit*
+
+
+---
+
+-> ## Variables
+-> ## .........
+
+*Special/ Builtin* variables
+- $- : flags passed to the script
+- $! : process id (PID) of the last job started in background
+- $$ : PID of the script
+- $? : exit status of last command, function or script
+^
+- $PATH : locations to search for executable files
+^
+Many more variables
+^
+
+*User defined* variables
+- $NAME
+- $FILE
+
+---
+
+-> ## Create and Run a bash script
+-> ## ............................
+
+```
+$ echo 'ls' > /tmp/my_ls.sh
+```
+
+- */tmp/my_ls.sh* : full path to script
+
+^
+Execution method: 1
+```
+$ bash /tmp/my_ls.sh
+```
+^
+
+Execution method: 2
+```
+$ chmod +x /tmp/my_ls.sh; /tmp/my_ls.sh
+```
+
+^
+Execution method: 3
+```
+$ chmod +x /tmp/my_ls.sh; cd /tmp; ./my_ls.sh
+```
+
+^
+Execution method: 4
+```
+$ chmod +x /tmp/my_ls.sh; export PATH=/tmp:$PATH; my_ls.sh
+```
+*Do not add /tmp to PATH in real life*
+

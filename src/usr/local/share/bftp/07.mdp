@@ -1,0 +1,147 @@
+-> ## User management
+-> ## ...............
+
+- Create a new user
+^
+- User maintenance
+  - change password
+  - lock/ unlock user
+  - change group memberships
+^
+- Delete a user
+^
+
+- */etc/passwd* : primary user information, except password
+- */etc/shadow* : *salted* password
+^
+- */etc/groups* : system groups and membership information
+^
+- *nsswitch*    : many more ways of user management
+
+---
+-> ## /etc/passwd
+-> ## ...........
+
+GECOS
+- user name
+- masked password
+- user id
+- primary group id
+- full name
+- home directory
+- login shell
+
+^
+-> *$ man 5 passwd* for more information 
+
+---
+-> ## /etc/shadow
+-> ## ...........
+
+- login name
+- encrypted / salted password
+- date of last password change
+- minimum password age
+- maximum password age
+- password warning period
+- password inactivity period
+- account expiry date
+- reserved field
+^
+
+-> Readable by *root* only
+^
+-> *$ man 5 shadow* for more details
+
+---
+-> ## Useful commands
+-> ## ...............
+
+- *passwd* : change password
+- *id*     : get uid, gid and supplimentary groups
+- *getent* : get entries from nsswitch libraries
+
+---
+-> ## Demo
+-> ## ....
+
+- Create a user
+- Login with new user
+- Change password
+- Get information from *id* command
+- Get information from *getent* command
+- Get user's process using *ps -u* command
+
+---
+-> ## root user
+-> ## .........
+
+*root* user
+- has UID *0*
+^
+- has unrestricted access to the filesystem
+^
+- is used to *administer* the system
+^
+  - can change *ownership* and *permissions*
+^
+  - can manage *installed software packages*
+^
+  - can manage *system services*
+^
+- rights can be delegated with *sudo*
+
+---
+-> ## Switching user: su and sudo
+-> ## ...........................
+
+- delegate administration rights to other users
+^
+- *su*   : run command with *Substitute User* id/ group id
+^
+  - *requires password* of the target account
+^
+- *sudo* : execute command as another user
+^
+  - *does not require password* of the target account
+  - managed with *sudoers* file
+  - grants policy driven access 
+  - better suited for *rights delegation*
+
+---
+-> ## setuid and setgid
+-> ## .................
+
+*setuid*
+- configured by *chmod* command on executables
+^
+- allows *priviledge elevation* to specific program
+  - program runs as owner of the executable
+^
+- changes effective *uid* of the new process
+^
+- used by *passwd* command to modify root owned files
+
+^
+*setgid*
+- configured by *chmod* command on executables
+- allows *priviledge elevation* to specific program
+- changes effective *gid* of the new process
+
+**
+
+
+---
+-> ## Group management
+-> ## ................
+
+- each user has one *primary group*
+  - set in */etc/passwd*
+^
+- a user may be member of one or more *supplimentary groups*
+  - set in */etc/groups*
+  - *usermod* command updates group membership
+^
+
+- each file has one group ownership
+  - *chgrp* changes group ownership of file(s)
