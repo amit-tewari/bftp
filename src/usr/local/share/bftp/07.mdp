@@ -89,6 +89,8 @@ GECOS
 ^
   - can manage *system services*
 ^
+  - can run programs on *priviledged ports* (<1024) 
+^
 - rights can be delegated with *sudo*
 
 ---

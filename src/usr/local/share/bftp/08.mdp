@@ -1,0 +1,76 @@
+-> ## Package Management
+-> ## ..................
+
+Package
+- application software
+^
+- default configurations
+^
+- documentation
+
+
+^
+- *packaged* by developers or distribution mainetainers
+^
+- *distributed* by developers or distributions
+ 
+
+^
+- Debian and Ubuntu distributions
+  - package format: deb
+- Redhat and Centos distributions
+  - package format: rpm
+^
+- Many more distributions, many more formats
+
+^
+-> We are focuing on Debian packages
+-> .................................
+-> All operations, except for search, require root level access.
+
+---
+-> ## Frequest operations
+-> ## ...................
+
+*Package*
+- *apt install*      : installation and upgrade to latest version
+- *apt remove*       : remove a package, leaving configurations
+- *apt reinstall*    : again install a existing/ removed package
+- *apt purge*        : remove package with configurations
+- *apt upgrade*      : upgrade all installed packages to latest
+
+^
+*Sources or Repositories*
+- *apt search*       : search for a package in *package index*
+- *apt update*       : update package index
+- *apt clean*        : delete extra files from cache
+- *apt autoremove*   : delete unused packages
+- *apt-cache policy* : identify package source
+
+^
+*Pacage contents*
+- *dpkg -L*          : list all files in package
+- *dpkg --search*    : find package providing a specific file
+
+^
+-> This is a simplified description of tools and commands.
+-> Debian package management tools are quite powerful.
+
+---
+-> ## Sources or Source repositories
+-> ## ..............................
+
+Source files
+- available in */etc/apt/sources.list.d/* directory
+- contain *mirror* information to fetch packages from
+- provided by
+  - distributions (e.g. Debian, Ubuntu)
+  - independent developers or organizations
+
+---
+-> ## Excercise
+-> ## .........
+
+- install vim, gtypist, tmux and git on your system.
+- view sources files on your system.
+- list contents of tmux package
