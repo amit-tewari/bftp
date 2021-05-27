@@ -1,0 +1,222 @@
+-> ## coreutils
+-> ## .........
+
+-> https://www.gnu.org/software/coreutils/
+
+-> Basic file, shell and text manipulation utilities
+^
+
+- installed in */bin* and */usr/bin* directories
+- provided by *coreutils* package
+- available on all GNU/ Linux systems
+- about *100 utilities*
+
+---
+
+-> ## /bin utils from Debian(Buster)
+-> ## ..............................
+
+*/bin* contains executables required for
+- emergency repairs
+- booting
+- single user mode
+
+^
+cat             chgrp           chmod           chown 
+cp              date            dd              df    
+dir             echo            false           ln    
+ls              mkdir           mknod           mktemp
+mv              pwd             readlink        rm    
+rmdir           sleep           stty            sync  
+touch           true            uname           vdir
+
+---
+-> ## File and Directory operations
+-> ## .............................
+
+*pwd          * : Print Working Directory
+*ls/ dir/ vdir* : List directory
+*mkdir        * : Make directory
+*touch        * : create empty file or update timestamps
+*cp           * : Copy file contents into another file
+
+^
+*ln           * : create link to another file
+*readlink     * : print resolved symbolic link
+*mv           * : Move a file
+*rm           * : Remove a file
+*rmdir        * : Remove a directory
+
+^
+*mktemp       * : Make a temporary file
+*mknod        * : Make a node in file system (device or FIFO)
+
+^
+-> See respective man pages for details
+
+---
+-> ## Permissions
+-> ## ...........
+
+*chmod*
+*chown*
+*chgrp*
+
+^
+-> ## Misc
+-> ## ...................
+
+*df*
+^
+
+*cat*
+*dd*
+*sync*
+
+^
+*uname*
+*date*
+*echo*
+*sleep*
+*stty*
+^
+
+*false* and *true*
+
+---
+
+-> ## /usr/bin utils from Debian(Buster)
+-> ## ..................................
+
+-> */usr/bin* is primary directory of executable commands
+
+^
+\[               arch            b2sum           base32           
+base64          basename        chcon           cksum            
+comm            csplit          cut             dircolors        
+dirname         du              env             expand           
+expr            factor          fmt             fold             
+groups          head            hostid          id               
+install         join            link            logname          
+md5sum          mkfifo          nice            nl               
+nohup           nproc           numfmt          od               
+paste           pathchk         pinky           pr               
+printenv        printf          ptx             realpath         
+runcon          seq             sha1sum         sha224sum        
+sha256sum       sha384sum       sha512sum       shred            
+shuf            sort            split           stat             
+stdbuf          sum             tac             tail             
+tee             test            timeout         tr               
+truncate        tsort           tty             unexpand         
+uniq            unlink          users           wc               
+who             whoami          yes             md5sum.textutils
+
+---
+-> ## /usr/bin coreutils : text processing
+-> ## ....................................
+
+head
+tail
+tac
+sort/ tsort
+wc
+uniq
+
+^
+cut
+paste
+join
+fold
+split
+csplit
+
+^
+expand/ unexpand
+tr
+shuf
+fmt/ numfmt
+nl
+od
+ptx
+comm
+
+---
+
+-> ## /usr/bin coreutils : encoding and checksum
+-> ## ..........................................
+
+base64
+
+sum
+cksum
+md5sum
+sha*sum
+- sha1sum
+- sha224sum
+- sha256sum
+- sha384sum
+- sha512sum
+
+---
+
+-> ## /usr/bin coreutils : filesystem
+-> ## ...............................
+
+test
+stat
+du
+basename
+pathchk
+realpath
+dirname
+
+install
+link/ unlink
+mkfifo
+
+truncate
+shred
+
+---
+
+-> ## /usr/bin coreutils : Processes
+-> ## ..............................
+
+nice
+nohup
+nproc
+tee
+stdbuf
+timeout
+tty
+env
+printenv
+
+---
+
+-> ## /usr/bin coreutils : User
+-> ## .........................
+
+id
+who
+whoami
+users
+groups
+
+
+
+---
+
+-> ## /usr/bin coreutils : Misc
+-> ## .........................
+
+hostid
+seq
+yes
+printf
+expr
+
+
+---
+$ dpkg -L coreutils | grep '^/bin/'| sed -e 's#/bin/##g' | column -x
+$ dpkg -L coreutils | grep '^/usr/bin/'| sed -e 's#/usr/bin/##g' | column -x -c100
