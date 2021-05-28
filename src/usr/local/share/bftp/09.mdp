@@ -34,22 +34,22 @@ touch           true            uname           vdir
 -> ## File and Directory operations
 -> ## .............................
 
-*pwd          * : Print Working Directory
-*ls/ dir/ vdir* : List directory
-*mkdir        * : Make directory
-*touch        * : create empty file or update timestamps
-*cp           * : Copy file contents into another file
+*pwd          *    : Print Working Directory
+*ls/ dir/ vdir*    : List directory
+*mkdir        *    : Make directory
+*touch        *    : create empty file or update timestamps
+*cp           *    : Copy file contents into another file
 
 ^
-*ln           * : create link to another file
-*readlink     * : print resolved symbolic link
-*mv           * : Move a file
-*rm           * : Remove a file
-*rmdir        * : Remove a directory
+*ln           *    : create link to another file
+*readlink     *    : print resolved symbolic link
+*mv           *    : Move a file
+*rm           *    : Remove a file
+*rmdir        *    : Remove a directory
 
 ^
-*mktemp       * : Make a temporary file
-*mknod        * : Make a node in file system (device or FIFO)
+*mktemp       *    : Make a temporary file
+*mknod        *    : Make a node in file system (device or FIFO)
 
 ^
 -> See respective man pages for details
@@ -58,30 +58,30 @@ touch           true            uname           vdir
 -> ## Permissions
 -> ## ...........
 
-*chmod*
-*chown*
-*chgrp*
+*chmod*            : Change file mode bits/ permissions
+*chown*            : Change file owner and group
+*chgrp*            : Change group ownership of files
 
 ^
 -> ## Misc
 -> ## ...................
 
-*df*
+*df*               : List file system disk usage
 ^
 
-*cat*
-*dd*
-*sync*
+*cat*              : Concatenate files and print on STDOUT
+*dd*               : Convert and copy a file
+*sync*             : Syncronize cached writes to storage
 
 ^
-*uname*
-*date*
-*echo*
-*sleep*
-*stty*
+*uname*            : Print system information
+*date*             : Print or set system date and time
+*echo*             : Display a line of text
+*sleep*            : Delay for a specified ammount of time
+*stty*             : Print or change terminal line settings
 ^
 
-*false* and *true*
+*false* and *true*   : Do nothing unsuccessfully/ successfully
 
 ---
 
@@ -115,93 +115,99 @@ who             whoami          yes             md5sum.textutils
 -> ## /usr/bin coreutils : text processing
 -> ## ....................................
 
-head
-tail
-tac
-sort/ tsort
-wc
-uniq
+*head*             : Output the first part of files
+*tail*             : Output the last part of files
+*tac*              : Concatenate and print files in reverse
+*sort/ tsort*      : Sort lines of text files/ sort topologically 
+*wc*               : Print newline, word and byte counts for files
+*uniq*             : Report or ommit repeated lines
 
 ^
-cut
-paste
-join
-fold
-split
-csplit
+*cut*              : Remove sections of text from each line of file
+*paste*            : Merge lines of files
+*join*             : Join lines of two files on a common field
+*fold*             : Wrap each input line to fit in a specified width
+*split*            : Split a file into pieces
+*csplit*           : Split a file into sections by context
 
 ^
-expand/ unexpand
-tr
-shuf
-fmt/ numfmt
-nl
-od
-ptx
-comm
+*expand/ unexpand* : Convert tabs to spaces/ spaces to tabs
+*tr*               : Translate or delete characters
+*shuf*             : Generate random permutations
+*fmt*              : Simple optimal text formatter
+*numfmt*           : Convert number from/ to human-readable strings
+*nl*               : Number line of files
+*od*               : Dump files in octal and other formats
+*ptx*              : Produce a permuted index of file contents
+*comm*             : Compare two sorted files line by line
 
 ---
 
 -> ## /usr/bin coreutils : encoding and checksum
 -> ## ..........................................
 
-base64
+*base64*           : Encode data/ decode base64 strings
 
-sum
-cksum
-md5sum
+*sum*              : Checksum and block counts for each file
+*cksum*            : Checksum and count bytes for each file
+*md5sum*           : Compute and check MD5 message digests
 sha*sum
-- sha1sum
-- sha224sum
-- sha256sum
-- sha384sum
-- sha512sum
+*- sha1sum*        : Compute and check SHA1 message digests
+*- sha224sum*      : Compute and check SHA224 message digests
+*- sha256sum*      : Compute and check SHA256 message digests
+*- sha384sum*      : Compute and check SHA384 message digests
+*- sha512sum*      : Compute and check SHA512 message digests
 
 ---
 
 -> ## /usr/bin coreutils : filesystem
 -> ## ...............................
 
-test
-stat
-du
-basename
-pathchk
-realpath
-dirname
+*test*             : Check file types and compare values
+*stat*             : Display file or filesystem status
+*du*               : Estimate file space usage
+*basename*         : Strip directory and suffix from filenames
+*pathchk*          : Check filenames for validity and portability
+*realpath*         : Print resolved path
+*dirname*          : Strip last component from filename
+^
 
-install
-link/ unlink
-mkfifo
+*install*          : Copy files and set attributes
+*link*             : Call link function to create a link to file
+*unlink*           : Call unlink function to remove a link to file
+*mkfifo*           : Make FIFOs (names pipes)
+^
 
-truncate
-shred
+*truncate*         : Shrink or expand size of file
+*shred*            : Overwrite file to hide contents, optionally delete
 
 ---
 
 -> ## /usr/bin coreutils : Processes
 -> ## ..............................
 
-nice
-nohup
-nproc
-tee
-stdbuf
-timeout
-tty
-env
-printenv
+*nice*             : Run program with modified schudiling priorities
+*nohup*            : Run program immune to *hangup* signals
+*nproc*            : Print number of processing units avaialable
+*tee*              : Read STDIN and write to STDOUT and file
+*stdbuf*           : Modify buffering for default streams
+
+^
+*timeout*          : Run command with a time limit
+*tty*              : Print filename of the terminal connected to STDIN
+*env*              : Run program in modified environment
+*printenv*         : Print all or part of environment
 
 ---
 
 -> ## /usr/bin coreutils : User
 -> ## .........................
 
-id
-who
-whoami
-users
-groups
+*id*               : Print real and effective UID and GIDs
+*who*              : Show who is logged on
+*whoami*           : Print effective userid
+*users*            : Print usernames of logged in users
+*groups*           : Print the groups user is in
 
 
 
@@ -210,11 +216,11 @@ groups
 -> ## /usr/bin coreutils : Misc
 -> ## .........................
 
-hostid
-seq
-yes
-printf
-expr
+*hostid*           : Print numeric identifier for current host
+*seq*              : Print a sequence of numbers
+*yes*              : Output a string repeatedly until killed
+*printf*           : Format and print data
+*expr*             : Evaulate expressions
 
 
 ---
