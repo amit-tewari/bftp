@@ -201,3 +201,232 @@ Pipeline
 ^
 - e.g.
   - *$ cat | sort*
+
+---
+-> ## Process information
+-> ## ...................
+
+- *ps     *: Report snapshot of current processes
+- *pstree *: Display tree of processes
+^
+- *top    *: Diplay process in near realtime
+
+
+---
+-> ## ps
+-> ## ..
+
+```
+$ ps aux | head
+USER PID %CPU %MEM VSZ   RSS  TTY STAT START TIME COMMAND
+root 1   0.0  0.8  34808 8236 ?   Ss   May24 0:27 /sbin/init
+root 2   0.0  0.0  0     0    ?   S    May24 0:00 [kthreadd]
+root 3   0.0  0.0  0     0    ?   I<   May24 0:00 [rcu_gp]
+root 4   0.0  0.0  0     0    ?   I<   May24 0:00 [rcu_par_gp]
+root 8   0.0  0.0  0     0    ?   I<   May24 0:00 [mm_percpu_wq]
+root 9   0.0  0.0  0     0    ?   S    May24 0:00 [rcu_tasks_rude_]
+root 10  0.0  0.0  0     0    ?   S    May24 0:00 [rcu_tasks_trace]
+root 11  0.0  0.0  0     0    ?   S    May24 0:02 [ksoftirqd/0]
+root 12  0.0  0.0  0     0    ?   I    May24 0:09 [rcu_sched]
+```
+
+*USER    * : Owner of the process (Effective user)
+*PID     * : Process ID
+*%CPU    * : cputime/ realtime ratio
+*%MEM    * : Process's resident set size to phys. mem. ratio
+*VSZ     * : Virtual memory size on KiB (1024 byte units)
+*RSS     * : Resident Set Size (non-swapped phys. mem. in KiB)
+*TTY     * : Controlling Terminal
+*STAT    * : Process State code
+*START   * : time when command started
+*TIME    * : accumulated cpu time (user + system)
+*COMMAND * : executable name
+
+---
+-> ## PROCESS STATE CODES
+-> ## ...................
+
+-> (see _PROCESS STATE CODES_ in _man ps_)
+
+\ Here are the different values that the s, stat and state
+\ output specifiers (header "STAT" or "S") will display to
+\ describe the *state of a process*:
+\      D    uninterruptible sleep (usually IO)
+\      I    Idle kernel thread
+\      R    running or runnable (on run queue)
+\      S    interruptible sleep (waiting for an event to
+\           complete)
+\      T    stopped by job control signal
+\      t    stopped by debugger during the tracing
+\      W    paging (not valid since the 2.6.xx kernel)
+\      X    dead (should never be seen)
+\      Z    defunct ("zombie") process, terminated but not
+\           reaped by its parent
+
+\ For BSD formats and when the stat keyword is used, additional
+\ characters may be displayed:
+\      <    high-priority (not nice to other users)
+\      N    low-priority (nice to other users)
+\      L    has pages locked into memory (for real-time and
+\           custom IO)
+\      s    is a session leader
+\      l    is multi-threaded (using CLONE_THREAD, like NPTL
+\           pthreads do)
+\      +    is in the foreground process group
+
+
+---
+-> ## pstree
+-> ## ......
+
+```
+ $ pstree
+systemd─┬─agetty
+        ├─alsactl
+        ├─apache2───2*[apache2───26*[{apache2}]]
+        ├─avahi-daemon───avahi-daemon
+        ├─bluetoothd
+        ├─cron
+        ├─dbus-daemon
+        ├─dhcpcd
+        ├─haveged
+        ├─hciattach
+        ├─master─┬─pickup
+        │        └─qmgr
+        ├─rngd───3*[{rngd}]
+        ├─rsyslogd───3*[{rsyslogd}]
+        ├─sshd───sshd───sshd───bash───tmux: client
+        ├─systemd───(sd-pam)
+        ├─systemd-journal
+        ├─systemd-logind
+        ├─systemd-timesyn───{systemd-timesyn}
+        ├─systemd-udevd
+        ├─thd
+        ├─tmux: server─┬─bash───mdp
+        │              ├─bash───vim
+        │              └─bash───pstree
+        └─2*[wpa_supplicant]
+```
+
+---
+
+-> ## top
+-> ## ...
+
+```
+$ top -w120 -b1 -n1 | head -12
+top - 17:57:20 up 7 days,  4:36,  4 users,  load average: 0.08, 0.32, 0.37
+Tasks: 121 total,   1 running, 120 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu2  : 10.0 us, 15.0 sy,  0.0 ni, 75.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu3  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :    924.2 total,     48.5 free,     72.3 used,    803.4 buff/cache
+MiB Swap:    100.0 total,     96.5 free,      3.5 used.    778.0 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 1936 usr1      20   0    9968   4404   2328 S  11.1   0.5   2:16.96 tmux: server
+ 3668 usr1      20   0   10184   2900   2596 R   5.6   0.3   0:00.05 top
+```
+
+---
+-> ## top: Summary display
+-> ## ....................
+
+-> (see _SUMMARY DISPLAY_ under _OVERVIEW_ in _man top_ )
+
+top
+  - *uptime       *: length of time since last boot
+  - *users        *: total number of users with actice processes
+  - *load average *: system load average over last 1, 5, 15 minutes
+^
+Tasks
+  - *total        *: count of tasks/ threads in any state
+  - *running      *: count of tasks/ threads in run state
+  - *sleeping     *: count of tasks/ threads in sleep state
+  - *stopped      *: count of tasks/ threads in stop state
+  - *zombie       *: count of tasks/ threads in zombie state
+^
+CpuN State
+  - *us           *: time running un-niced user processes
+  - *sys          *: time running kernel user processes
+  - *ni           *: time running niced user processes
+  - *id           *: time spent in the kernel idle handler
+  - *wa           *: time waiting for I/O completion
+  - *hi           *: time spent servicing hardware interrupts
+  - *si           *: time spent servicing software interrupts
+  - *st           *: time stolen from this vm by the hypervisor
+^
+Mib Mem/ Swap
+  - *total        *: Total physical memory/ Swap
+  - *free         *: Free physical memory/ Swap
+  - *used         *: Used physical memory/ Swap
+  - *buffer/cache *: Memory used by IO buffers and various caches
+  - *avail        *: Estimated available memory for new processes
+
+---
+-> ## top: process info <-
+-> ## .................
+
+-> (see _FIELDS / Columns Display_ under _OVERVIEW_ in _man top_ )
+
+*PID     *: Process ID
+*USER    *: Effective user name of the task's owner
+*PR      *: Scheduling priority of task
+*NI      *: Nice value
+*VIRT    *: Virtual Memory size oin KiB
+*RES     *: Resident memory size (KiB)
+*SHR     *: Subset of RES shared with other processes
+*S       *: Process status
+*%CPU    *: cpu time / total cpu time % since last refresh
+*%MEM    *: resident set/ total physical memory %
+*TIME+   *: More granular CPU time
+*COMMAND *: command name or command line
+
+^
+-> _Bonus: htop is more modern top alternate_
+
+---
+-> ## lsof
+-> ## ....
+
+```
+$ sudo lsof | head -3 | column -t -s' '
+COMMAND PID TID TASKCMD USER FD  TYPE DEVICE SIZE/OFF NODE  NAME
+systemd 1               root cwd DIR  179,2  4096     2     /
+systemd 1               root rtd DIR  179,2  4096     2     /
+```
+^
+
+-> check _OUTPUT_ heading in _man lsof_ for detailed information
+
+*COMMAND  * : first 9 characters of command
+*PID      * : Process ID
+*TID      * : Task/ Thread ID
+*TASKCMD  * : Task command name
+*USER     * : Usually Effective User ID or login name
+*FD       * : File descriptor number (also refer man page)
+*TYPE     * : Type of node associated (also refer man page)
+*DEVICE   * : Device major and minor numbers (also refer man page)
+*SIZE/OFF * : Size of file or offset in file
+*NODE     * : node number of the local file
+*NAME     * : Name of file or mount point with filesystem
+
+^
+-> _Must read man page once, end to end._
+
+---
+-> ## Packages in Debian
+-> ## ..................
+
+- *procps *: ps, top
+^
+- *psmisc *: pstree
+^
+- *htop   *: htop
+^
+- *lsof   *: lsof
+
+```
+$ sudo apt install procps psmisc htop lsof
+```
