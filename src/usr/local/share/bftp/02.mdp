@@ -416,10 +416,24 @@ systemd 1               root rtd DIR  179,2  4096     2     /
 -> _Must read man page once, end to end._
 
 ---
+-> ## free: summary of memory information
+-> ## ...................................
+
+```
+$ free -m | column -t -s' '
+total  used  free  shared  buff/cache  available
+Mem:   924   70    103     9           750        780
+Swap:  99    3     96
+```
+
+^
+-> Same as _SUMMARY DISPLAY_ from `top` <-
+
+---
 -> ## Packages in Debian
 -> ## ..................
 
-- *procps *: ps, top
+- *procps *: ps, top, free
 ^
 - *psmisc *: pstree
 ^

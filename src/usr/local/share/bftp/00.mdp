@@ -1,0 +1,174 @@
+-> ## Login
+-> ## .....
+
+Login with any one of following (with Debian GNU/ Linux installed):
+- local disktop
+  - Raspberry Pi is a good option
+  - works with _username + password_
+^
+- virtual machine on local desktop
+  - HyperV, VirtualBox or similar software
+  - works with _username + password_ or _SSH keys_
+^
+- SSH connection to
+  - self hosted cloud instance
+  - friend/ college/ employer provided server
+  - works with _username + password_ or _SSH keys_
+  - requires ssh client (PuTTY on windows)
+
+---
+-> ## Login
+-> ## .....
+
+*Login prompt* (password based login)
+
+```
+HOST INFORMATION BANNER
+HOSTNAME login:
+```
+
+- type in user/ login name and press enter
+  - user needs to have *login name*, *password*
+  - user optionally needs *hostname*, if connecting with SSH
+^
+- type in password on next prompt and press enter
+  - password is not echoed back when typed, for security reasons
+^
+- successful login gives *command prompt*
+  - this is where we type and run various commands
+  - looks similar to `USER@HOSTNAME:current_directory $ `
+^
+  - *$* : indicates _non-root/ normal_ user
+  - *#* : indicates _root_ user
+
+^
+SSH key based login
+- gives command prompt directly
+- requires account configured with *authorized_keys*
+^
+- user need to have
+  - login name
+  - SSH key file for login
+  - Hostname where account exists
+^
+- refer client and hosting documentation on usage
+
+---
+-> ## First login
+-> ## ...........
+
+Change your password
+- run passwd command on command prompt, `$ passwd`
+^
+- type in current password
+- type in new password twice (takes care of typos)
+- again, passwords are not echoed
+- on success, user can login with new password
+^
+- NOTE: with SSH key based login, password may not be available
+
+---
+-> ## Running
+-> ## .......
+
+Running commands
+- type in command on *command prompt*
+- provide any required *options*
+- provide any required *arguments*
+
+_Example_
+\ `$ ls -lah /tmp`
+^
+- *ls   *: command
+- *-lah *: options available with ls command
+\       _l_, _a_ and _h_ are options
+\       options change the behaviour of command
+- */tmp *: argument used with ls command
+\       arguments are used by command or options to operate on
+
+---
+-> ## Finding help
+-> ## ............
+
+*man* pages and *info* are the help systems available
+- we are covering man (manual) pages
+^
+- _man-db_ Debian package provides man command
+- _manpages-dev_ Debian package provides system manuals
+- individual packages bring in their own manual pages
+^
+- We can create our own man pages too
+
+^
+Example
+\ `$ man ls`
+- shows man page for ls command
+- press *q* to come out of man page
+
+---
+-> ## Using man pages : Sections
+-> ## ..........................
+
+man pages are devided in following sections
+\ 1   Executable programs or shell commands
+\ 2   System calls (functions provided by the kernel)
+\ 3   Library calls (functions within program libraries)
+\ 4   Special files (usually found in /dev)
+\ 5   File formats and conventions eg /etc/passwd
+\ 6   Games
+\ 7   Miscellaneous (including macro packages and conventions),
+\     e.g. man(7), groff(7)
+\ 8   System administration commands (usually only for root)
+\ 9   Kernel routines [Non standard]
+^
+
+-> run `$ man man` to check man's manual
+
+---
+-> ## Using man pages: page structure
+-> ## ...............................
+
+man pages have certain *page sections*
+
+Conventional section names
+\    AUTHORS         BUGS            CONFIGURATION   CONFORMING TO
+\    DESCRIPTION     ENVIRONMENT     ERRORS          EXAMPLE
+\    EXIT STATUS     FILES           NAME            NOTES
+\    OPTIONS         RETURN VALUE    SEE ALSO        SYNOPSIS
+\    VERSIONS
+There may be more, and all of above may not be used
+^
+
+Sections in man's man page
+```
+$ man man | grep -v '^ '| grep -v '^$'
+MAN(1)         Manual pager utils      MAN(1)
+NAME
+SYNOPSIS
+DESCRIPTION
+EXAMPLES
+OVERVIEW
+DEFAULTS
+OPTIONS
+EXIT STATUS
+ENVIRONMENT
+FILES
+SEE ALSO
+HISTORY
+2.8.5              2019-01-05          MAN(1)
+```
+
+---
+-> ## Useful man commands
+-> ## ...................
+
+- search on keyword:
+```
+$ man -k xargs
+xargs (1)  - build and execute command lines from standar...
+```
+shows
+- command name : xargs
+- man section  : 1
+- short intro  : build and execute command lines from standar
+
