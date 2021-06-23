@@ -1,0 +1,172 @@
+%title Exercise
+
+Use provided hints to search
+- man pages, and
+- search engines
+
+---
+
+Preparation steps:
+..................
+
+- Create *bin* directory in home ( *~* ) directory
+- Create a script *~/bin/setup.sh*
+- Implement all excercises in *~/bin/setup.sh*, incrementally
+  - add solution for one problem
+  - run script to test it works
+  - move to next problem
+- Add the first non-root user to sudoers file.
+
+*HINT*:
+- install sudo package and use visudo command
+- make sure *~/bin* is avaialable in *PATH*
+- set execute permissions and add PATH entris appropriately
+- make sure first sudo user is able to run commands *with sudo*
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+## Setup home directory
+
+- Create following directories in home directory
+  - *data*
+  - *tmp*
+
+*HINT*:
+- use mkdir command
+- test if directory already exists
+  - if directory exists, no action needed
+  - else create directory
+
+---
+
+Create sample data:
+...................
+
+Let us populate some sample data in files for next steps
+
+- create file *packages.list* in ~/data directory
+- populate packages.list with following content
+```
+vim
+gtypist
+mdp
+git
+```
+
+^
+- create file *users.list* in ~/data directory
+- populate users.list with following content
+```
+user1
+user2
+user3
+```
+*Note*: users can be other humans too
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+## Install packages
+
+- Create a simple script ( `~/bin/setup.sh` ) that
+  - checks if ~/data/packages.list file exists
+  - reads ~/data/packages.list file
+  - store each package name in a loop variable, one-by-one
+  - install the package in loop iteration
+
+*HINT*:
+
+- use file tests
+- use read builtin with while loop
+- use apt to install packages. this needs sudo access
+^
+
+## Enhance script
+
+- Ask user for name of the file on program start
+- Ensure current user has sudo rights at the start
+- If program fails, return with proper exit code
+- Show final stauts of the packages from the list
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+## Add Users
+
+- Create a simple script that
+  - checks if ~/data/users.list file exists
+  - read ~/data/users.list file
+  - store each user name in a loop variable, one-by-one
+  - create user
+
+## Enhance script
+
+- Ask user for the name of the file on program start
+- Ensure current user has sudo rights at the start
+- Verify user does not exist already, before creation
+- If program fails, return with proper exit code
+- Show final stauts of the packages from the list
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+## Add help option
+
+- Check if firt argument is *help*
+- if first agument is *help*
+  - show message *help for my_program*
+
+*HINT* :
+
+- Use positional parameters to scripts
+- Use special variable for scriptname to replace *my_program*
+- Use bash *if* consruct to check argument value
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+## Add first feature
+
+- Add argument *suid_audit*
+  - retain *help* option from previous excercise
+- if first argument to script is *suid_audit*
+  - run *find* command with sudo on all directories in *PATH*
+  - identify all files with suid permission on
+  - save list of files in *~/tmp/suid_audit.txt* file
+
+*HINT*:
+
+- Use find command
+- Use *if.. else* bash construct to check options
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+*HINT*:
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+*HINT*:
+
+---
+
+Enhance *~/bin/setup.sh* to:
+..........................
+
+*HINT*:
