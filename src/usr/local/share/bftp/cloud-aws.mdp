@@ -1,0 +1,171 @@
+%title: Cloud Computing
+%author: Amit Tewari
+%date: 2021-07-10
+
+---
+
+-> What is cloud computing?
+-> ........................
+
+As per AWS
+- on-demand delivery of IT resources over the Internet
+- pay-as-you-go pricing
+
+As per Azure
+- delivery of computing services including 
+  - servers, 
+  - storage, 
+  - databases, 
+  - networking, 
+  - software, 
+  - analytics, and 
+  - intelligence
+  over the Internet (“the cloud”)
+- offering
+  - faster innovation, 
+  - flexible resources, and 
+  - economies of scale
+
+---
+-> Why cloud computing?
+-> ....................
+
+- Speed
+- Productivity
+- Reliability
+- Cost/ Price performance ratio
+- Global scale
+- Performance
+- Security
+
+-> When used judiciously.
+
+---
+-> Players
+-> .......
+
+-> *Public Clouds*
+-> *.............*
+-> AWS (Amazon web services, Amazon)
+-> Azure (Microsoft)
+-> GCP (Google Cloud Platform, Google)
+-> Digital Ocean
+-> OCI (Oracle cloud Infrastructure, Oracle)
+-> and many more
+
+-> *Private Clouds*
+-> *..............*
+-> Openshift (Redhat)
+-> IBM
+-> VMWare
+-> Citrix
+
+---
+-> Getting Started with AWS and Terraform
+-> ......................................
+
+Tools needed
+- AWS CLI
+- Terraform
+- SSH client, Application clients
+
+---
+-> Setting up tools
+-> ................
+
+Install terraform
+
+```
+mkdir -p bin/.terraform
+TERRAFORM_VERSION=1.0.1
+wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}\
+/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+
+unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+chmod +x terraform
+mv terraform bin/.terraform/terraform_v${TERRAFORM_VERSION}
+ln -snf ~/bin/.terraform/terraform_v${TERRAFORM_VERSION} \
+ ~/bin/terraform
+```
+
+---
+-> Setting up tools
+-> ................
+
+Install and configure AWS CLI
+
+*Install*
+
+```
+sudo pip install awscli
+sudo apt-get install python python-pip
+```
+
+*Configure*
+
+```
+aws configure
+AWS Access Key ID [None]: AKIAVWUZOFQDEEO6SHEV
+AWS Secret Access Key [None]: 7erAQGxxxxxxxxxxyyyyyyyyyyyyy
+Default region name [None]: ap-south-1
+Default output format [None]:
+```
+
+---
+-> Terraform workflow
+-> ..................
+
+terraform
+- init (one time)
+- validate
+- plan
+- apply
+- output
+
+---
+-> Demo
+-> ....
+
+-> Live Demo
+
+---
+-> more about Terraform <-
+-> ....................
+
+Infrastructure as code (IaC)
+- Providers
+- Resources
+- Data sources
+- Modules
+- Output
+^
+- arrays, lists and objects
+
+---
+-> AWS Educate
+-> ...........
+
+-> Provides exposure to AWS services in limited way
+
+---
+-> Beyond Clouds
+-> .............
+
+- Operating system fundamentals
+- Storage (Block and Object storage)
+- Networking
+- IAM (Identity and Access management)
+- Application servers and protocols
+  - RDS:         RDBMS (PostgreSQL, MySQL etc)
+  - Elasticache: Memory Caches (Redis, Memcache)
+  - SQS:         Message Queues
+  - and many more
+- Programming languages
+  - Lambda: Serverless computing
+- Service deployments and management
+^
+- Cost management
+
+---
+-> Q & A
+-> .....
