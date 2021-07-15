@@ -1,0 +1,124 @@
+%title: Git
+%author: Amit Tewari
+%date: 2021-07-10
+
+-> Git: Distributed Version Conttrol
+-> .................................
+
+---
+-> stash
+-> .....
+
+- save changes (commited or uncommited) for later use
+^
+- stash is local to workstation
+^
+- default is to ignore untracked and ignored files
+
+Using stash
+...........
+make changes to clean working tree
+add all/ partial changes to staging area ( *git add* )
+*git stash* : saves all uncommited changes in *stash*
+make other changes
+^
+
+*git stash pop* : apply stashed changes and remove from stash
+^
+OR
+*git stash apply* : apply stashed changes and retain in stash
+^
+
+Include *untracked* files
+.......................
+*git stash --include-untracked*
+OR
+*git stash -u*
+^
+
+Include *ignored* files
+.....................
+*git stash -a*
+
+---
+-> Multiple stashes
+-> ................
+
+```
+$ git stash list
+stash@{0}: WIP on main: 3233252 last commit message
+stash@{1}: WIP on main: 3233252 last commit message
+stash@{2}: WIP on main: 3233252 last commit message
+```
+^
+
+Name a stash
+............
+
+*$ git stash save "My message"*
+```
+$ git stash list
+stash@{0}: on main: My message
+stash@{1}: WIP on main: 3233252 last commit message
+stash@{2}: WIP on main: 3233252 last commit message
+```
+
+Apply a specific stash
+......................
+*$ git stash apply stash@{N}*
+^
+default is stash@{0}
+
+---
+-> stash diffs
+-> ...........
+
+- *$ git stash show* shows summary of stash
+- *$ git stash show -p* full diff of stash
+
+---
+-> Partial stash
+-> .............
+
+*$ git stash -p*, interactively asks to include *hunks*
+```
+$ git stash -p
+diff --git a/style.css b/style.css
+new file mode 100644
+index 0000000..d92368b
+--- /dev/null
++++ b/style.css
+@@ -0,0 +1,3 @@
++* {
++  text-decoration: blink;
++}
+Stash this hunk [y,n,q,a,d,/,e,?]? y
+diff --git a/index.html b/index.html
+index 9daeafb..ebdcbd2 100644
+--- a/index.html
++++ b/index.html
+@@ -1 +1,2 @@
++<link rel="stylesheet" href="style.css"/>
+Stash this hunk [y,n,q,a,d,/,e,?]? n
+```
+
+---
+-> Branch using stash
+-> ..................
+
+*$ git stash branch new-branch-name stash@{N}*
+- new-branch-name: new branch to be created
+- N: stash number in *git stash list*
+
+---
+-> Delete stash
+-> ............
+
+- *$ git stash drop stash@{N}*
+  remove a numbered stash
+- *$ git stash clear*
+  remove all stashes
+
+---
+-> Thank you
+-> .........
