@@ -1,0 +1,111 @@
+%title: GNU Make and Makefile
+%author: Amit Tewari
+%date: 2021-07-10
+
+-> GNU Make
+-> ........
+
+-> Home
+-> ....
+-> https://www.gnu.org/software/make
+
+-> Manual
+-> ......
+-> https://www.gnu.org/software/make/manual/make.html
+
+---
+-> About GNU Make
+-> ..........
+
+Make
+- uses Makefile
+- builds: generation of executables and other non-source files
+- installs: executables/ packages
+^
+
+Makefile contains
+- knowledge of how to build and install in forms of *rules*
+^
+
+Make/ Makefile
+- are language independent
+- are not limited to software build
+- can build, install, generate tags and much more
+
+---
+-> Makefile rules
+-> ..............
+
+A rule is
+```
+target:   dependencies ...
+	commands
+	...
+```
+
+a *target* is build
+- by executing *commands* from rule.
+- when *dependencies* are newer than target
+
+*Note*:
+- commands need to be prefixed by *tab*, not spaces
+- first rule of first makefile is *default goal*
+- default goal is used with targetless make invocation
+- except default goal, ordering of rules in insignificant
+- commands from a target are called *recipie*
+
+---
+-> How make works
+-> ..............
+
+First Phase
+...........
+- read all makefiles, including included makefiles
+- internalize variables and values
+- internalize implicit and explicit rules
+- build dependency graph of targets and their pre-requisites
+
+Second Phase
+............
+make uses this internalized data to 
+- determine which targets need to be updated
+- run the recipes necessary to update them.
+
+---
+-> Example
+-> .......
+
+```
+foo.o : foo.c defs.h       # module for twiddling the frobs
+	cc -c -g foo.c
+```
+
+- *foo.o* is default rule, i.e. *$ make* or *$ make foo.o* are same
+- foo.o is out of date if foo.c or defs.h are 
+  - missing, or 
+  - newer than foo.o
+- if foo.o is out of date, run *cc -c -g foo.c*
+
+---
+-> Exercise
+-> ........
+
+- Create two files, sample.c and sample.h.
+- sample.h defines a function to print a string
+- sample.c invokes the function defined in sample.h
+- Create a makefile such that
+  - *sample* executable is built by default
+  - *install* target copies executable to ~/bin
+  - *clean* target removes executable sample
+- run
+  - *$ make* to build the executable
+  - *$ sample* to print sample string
+- update sample.h to change message
+  - re-run make and make install, observe make output
+  - run sample again to see changed output
+- run *$ make clean* to remove temporary executable
+
+---
+-> Thank you
+-> .........
+
