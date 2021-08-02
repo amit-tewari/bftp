@@ -1,0 +1,138 @@
+%title: Docker
+%author: Amit Tewari
+%date: 2021-08-02
+
+---
+-> Virtulization
+-> .............
+
+Apply resource
+- isolation
+  - kernel
+  - user-space
+  - file system
+  - network
+  - IPC, and more
+^
+- prioritization, accounting and control
+  - CPU
+  - RAM
+  - Network, and more
+
+^
+Types (simplified)
+- Hardware level (sinlge hardware, multi-kernel, multi user-space)
+  - VirtualBox
+- OS level (single hardware, single kernel, multi user-space)
+  - Docker
+
+---
+-> Docker and containerization
+-> ...........................
+
+Containers
+- share same kernel
+- bundle own software, libraries and configurations
+- may communicate with each other
+- use Linux cgroups and namespaces
+
+*cgroups*    = control groups
+  isolate and limit resources
+*namespaces* = kernel resource partitioning
+  partition kernel resources
+
+---
+-> Docker ( and alternatives)
+-> ..........................
+
+-> Docker made containers popular, but now there are alternatives
+
+- podman + buildah
+- rkt
+- LXD
+- CRI-O
+
+---
+-> Using containers
+-> ................
+
+- build images
+  which contains required software, libs and configs
+- run containers
+  running instances of images, with any required customizations
+
+---
+-> Build image and run container
+-> .............................
+
+- create a Dockerfile
+- run *docker build*
+- run *docker run*
+
+-> Manage multiple related images and containers
+-> .............................................
+
+- use *docker compose*
+
+---
+-> Docker example
+-> ..............
+
+```
+$ sudo apt install docker-compose
+$ sudo usermod -a -G docker my_docker_user
+my_docker_user $ vim Dockerfile
+my_docker_user $ cat Dockerfile
+# https://docs.docker.com/engine/reference/builder/
+from alpine
+RUN   apk update \ 
+   && apk add bash
+my_docker_user $ docker build . -t my_image
+my_docker_user $ docker image ls
+REPOSITORY  TAG     IMAGE ID       CREATED         SIZE
+my_image    latest  ff45d007f714   27 seconds ago  9.89MB
+alpine      latest  d4ff818577bc   6 weeks ago     5.6MB
+my_docker_user $ docker run --rm -it my_image sh
+/ # 
+```
+
+*apt install docker-compose*
+  install docker and docker compose
+^
+*docker build . -t my_image*
+  build image using *Dockerfile* and *tag* it as *my_image*
+^
+*docker run --rm -it my_image sh*
+  starts a container and runs *sh* command in new container
+
+---
+-> docker-compose example
+-> ......................
+
+assuming *my_docker_user* is in use 
+
+```
+$ cat  docker-compose.yml
+#https://docs.docker.com/compose/compose-file/compose-file-v2/
+version: "2.4"
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 3001:80
+  apache:
+    image: httpd:alpine
+    ports:
+      - 3002:80
+$ docker compose up
+$ curl -I localhost:3001
+$ curl -I localhost:3002
+```
+
+*docker-compose up*
+  starts nginx and apacher server containers
+  exposes servers on host ports 3001 and 3002 respectively
+
+---
+-> Q & A
+-> .....
