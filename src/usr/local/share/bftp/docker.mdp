@@ -134,5 +134,180 @@ $ curl -I localhost:3002
   exposes servers on host ports 3001 and 3002 respectively
 
 ---
+-> Container images
+-> ................
+
+Images
+- provide custom file system
+^
+- contain everything needed to run an application
+^
+  - binaries/ scripts
+  - dependencies
+  - configurations
+  - environment variables
+  - default command to run
+^
+- are composed of one or more layers
+  - layers build on previous layer(s)
+  - map to instructions in Dockerfile
+
+---
+-> Building container images with Docker CLI
+-> .........................................
+
+```
+$ ls
+Dockerfile  index.php  setup_image.sh
+```
+^
+
+```
+$ cat Dockerfile
+FROM alpine:latest
+WORKDIR /app
+COPY *.sh  /app/
+RUN apk update && apk add bash && ./setup_image.sh
+COPY *.php /var/www/localhost/htdocs/
+EXPOSE 80
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+```
+
+---
+-> Building container images with Docker CLI
+-> .........................................
+
+```
+$ cat setup_image.sh
+#!/bin/bash
+cat > /etc/apk/repositories << EOF
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/main
+http://dl-cdn.alpinelinux.org/alpine/v$(cat /etc/alpine-release | cut -d'.' -f1,2)/community
+EOF
+apk update
+export phpver=$(alpinever=$(cat /etc/alpine-release);[ ${alpinever//./} -ge 309 ] && echo  7|| echo 5)
+apk add openrc apache2 php${phpver}-apache2 php${phpverx} --no-cache
+mkdir -p /run/apache2
+rc-update add apache2 default
+```
+^
+
+```
+$ cat index.php
+<?php
+phpinfo();
+?>
+```
+
+---
+-> Dockerfile format
+-> .................
+
+Format
+```
+INSTRUCTION arguments
+```
+^
+https://docs.docker.com/engine/reference/builder/#format
+
+Common Instructions
+- *FROM   *
+  set base image for next instructions
+^
+- *COPY   *
+  copy files from build context into image's filesystem
+^
+- *WORKDIR*
+  set working dir for RUN, CMD, ENTRYPOINT, COPY and ADD
+^
+- *RUN    *
+  execute any commands in a new layer on top of the current image
+^
+- *EXPOSE *
+   listen on the specified network ports at runtime
+^
+- *CMD    *
+  provide defaults for an executing container
+  can be executable or entrypoint parameters
+^
+- *USER   *
+   set the user name / group name (or UID/GID)
+   applied on any RUN, CMD and ENTRYPOINT instructions
+^
+- *VOLUME *
+   create a mount point with the specified name
+   mark it as holding externally mounted volumes from
+\     native host
+\     other containers
+^
+- *ENV    *
+  set environment variables
+
+---
+-> Expose ports and mount volumes
+-> ..............................
+
+Build new image using sample in presentation
+```
+$ docker build -t test .
+```
+^
+
+Expose port 80 from container onto host port 8080
+```
+$ docker run --rm -it -p8080:80 test
+```
+^
+
+Mount /tmp/http onto DocumentRoot
+```
+$ docker run --rm -it -v /tmp/http:/var/www/localhost/htdocs test
+```
+*NOTE*: host path need to be absolute
+
+---
+-> CMD and ENTRYPOINT
+-> .................
+
+Both define what command gets executed when running a container.
+
+Rules that describe their co-operation:
+- should specify at least one of CMD or ENTRYPOINT commands.
+^
+- ENTRYPOINT should be defined for executable container.
+^
+- CMD should be used for
+  - defining default arguments for an ENTRYPOINT command or 
+  - executing an ad-hoc command in a container.
+^
+- CMD is overridden with alternative arguments. 
+^
+- CMD is passed to ENTRYPOINT as arguments, if both are defined
+
+---
+-> docker-compose hands on
+-> .......................
+
+Create a docker-compose specification for PHP-MySQL application.
+
+*HINT* : Feel free to use presentation content or web searches
+
+Steps:
+- Define two services
+  - http
+    - create container with apache
+    - expose port 80
+    - mount host directory ~/docker/http as DocumentRoot
+  - db
+    - create container with MySQL
+    - expose port 3306
+    - mount host directory ~/docker/db as MySQL data directory
+- access website using browser (or curl) on host
+- add a php script to access DB contents
+
+*Bonus*
+Install wordpress in http service container
+
+---
 -> Q & A
 -> .....
