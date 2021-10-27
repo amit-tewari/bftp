@@ -32,7 +32,7 @@
 -> Data is stored in * data blocks *
 ^
 
--> Files are stored in filesystm on *Storage medida*
+-> Files are stored in filesystm on *Storage media*
 
 ---
 
@@ -161,6 +161,10 @@ dddddddddddddddddddddddddddddddd ▼
 -> ## Filesystem Logical layout
 -> ## .........................
 
+-> Filesystem is *heirarchy of directories and files*.
+-> Directories contain *dirent*\s
+^
+
 -> DIRENT
 -> ......
 ^
@@ -175,6 +179,11 @@ dddddddddddddddddddddddddddddddd ▼
 -> Two special dirents
 -> *.* : current directory
 -> *..* : parent directory  <-
+
+^
+Directories are
+- *created by mkdir*\, and *removed by rmdir*
+- *updated implicitly* by file update or access
 
 ---
 
@@ -211,6 +220,34 @@ $ ls -1di / /. /.. /home /home/. /home/..
 
 ---
 
+-> ## Regular files
+-> ## .............
+
+-> *Regular files* contain persistent data.
+
+^
+-> Metadata -> i-node
+-> File data -> Data blocks
+
+^
+```
+$ touch myfile                  # create empty regular file
+$ stat myfile                   # check medatada
+$ echo "Hello Linux" >> myfile  # add some content
+$ stat myfile                   # check difference in medatada
+```
+
+^
+-> Directories are special files containing dirents
+
+```
+$ stat .                        # try these commands
+$ ls -li .                      # "." refers current directory
+$ ls -lid .
+```
+
+---
+
 -> ## i-node contents
 -> ## ...............
 
@@ -235,6 +272,9 @@ $ ls -1di / /. /.. /home /home/. /home/..
 - single indirect data block address
 - double indirect data block address
 - tripple indirect data bock address
+
+^
+-> *NOTE: i-node is a fixed size data structure for a filesystem*
 
 ---
 
@@ -309,6 +349,11 @@ sticky | retain text in swap | only user or root can remove files
 -> .......
 -> chmod
 
+```
+$ chmod +x myfile      # symbolic mode
+$ chmod 777 myfile     # numeric mode
+```
+
 ---
 
 -> ## Soft and Hard links
@@ -328,6 +373,14 @@ Soft link
 - can point to non-existing target file
 - can link file on any file system
 - creates another i-node for soft link
+
+```
+$ ln -s myfile sl       # sl is soft link to myfile
+$ ln myfile hl          # hl is hard link to myfile
+$ ls -li sl hl myfile   # run this command and check
+                        # i-node numbers
+                        # filetype and permissions
+```
 
 ---
 
@@ -363,3 +416,55 @@ tib . -> adb -> adb -> adb -> data blocks
 
 -> Special file without data blocks
 -> Allows I/O redirection among unrelated processes
+
+^
+```
+$ mkfifo myfifo         # create a FIFO
+$ stat myfifo           # check metadata, specially file-type
+$ ls -l myfifo          # check dirent
+```
+
+---
+
+-> ## Socket, Block and Character files
+-> ## .................................
+
+Socket files
+- created by networking processes
+- UNIX Domain sockets : within processes on a single host
+- TCP sockets : within processes on a single host or across
+```
+$ find /tmp/ -type s
+```
+
+^
+Block files
+- represent block (buffered) storage devices, usually
+e.g. hard disk, USB drive etc.
+```
+$ find /dev -type b
+```
+
+^
+Character files
+- represent character oriented (un-buffered) devices, usually
+e.g. keyboard, mouse, modem etc.
+```
+$ find /dev -type c
+```
+
+---
+-> ## Review
+-> ## ......
+
+- What are disks, partitions and file-systems?
+- What are directories and regular files?
+- What is i-node and what it contains?
+- What are data blocks and how regular file data is stored inside them?
+- How are directories special files?
+- Why / is special dirent?
+- What is superblock and how it helps?
+- How Linux commands find free i-nodes and data blocks?
+- How Linux commands find used/ free space of disks and file-systems?
+- How soft and hard links differ?
+- What is buffering?
